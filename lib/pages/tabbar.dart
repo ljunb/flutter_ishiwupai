@@ -10,64 +10,51 @@ class TabBarPage extends StatefulWidget {
 
 class _TabBarState extends State<TabBarPage> {
   int _selectedIndex = 0;
-  var _tabImages;
-  final _tabTitles = ['食物百科', '逛吃', '我的'];
-  var _tabPages;
-
-  Image getTabImage(path) => Image.asset(path, width: 20.0, height: 20.0);
-
-  Image getTabIcon(int index) {
-    if (index == _selectedIndex) {
-      return _tabImages[index][1];
+  final _pages = [FoodEncyclopedia(), Community(), Me()];
+  final _tapOptions = [
+    {
+      'title': '食物百科',
+      'icon': getIcon('assets/ic_tab_homepage.png'),
+      'icon_select': getIcon('assets/ic_tab_homepage_select.png')
+    },
+    {
+      'title': '逛吃',
+      'icon': getIcon('assets/ic_tab_shop.png'),
+      'icon_select': getIcon('assets/ic_tab_shop_select.png')
+    },
+    {
+      'title': '我的',
+      'icon': getIcon('assets/ic_tab_my.png'),
+      'icon_select': getIcon('assets/ic_tab_my_select.png')
     }
-    return _tabImages[index][0];
-  }
+  ];
 
-  Text getTabTitle(int index) {
-    if (index == _selectedIndex) {
-      return Text(_tabTitles[index], style: TextStyle(color: Colors.orange));
-    }
-    return Text(_tabTitles[index], style: TextStyle(color: Colors.grey));
-  }
-
-  initData() {
-    _tabImages = [
-      [
-        getTabImage('assets/ic_tab_homepage.png'),
-        getTabImage('assets/ic_tab_homepage_select.png')
-      ],
-      [
-        getTabImage('assets/ic_tab_shop.png'),
-        getTabImage('assets/ic_tab_shop_select.png')
-      ],
-      [
-        getTabImage('assets/ic_tab_my.png'),
-        getTabImage('assets/ic_tab_my_select.png')
-      ]
-    ];
-    _tabPages = [FoodEncyclopedia(), Community(), Me()];
-  }
+  static Image getIcon(path) =>
+      new Image.asset(path, width: 20.0, height: 20.0);
 
   @override
   Widget build(BuildContext context) {
-    initData();
+    final items = _tapOptions.map((var tab) {
+      final index =
+          _tapOptions.indexWhere((ele) => ele['title'] == tab['title']);
+      final textStyle = index == _selectedIndex
+          ? TextStyle(fontSize: 12, color: Colors.orange)
+          : TextStyle(fontSize: 12, color: Colors.grey);
+
+      return BottomNavigationBarItem(
+        title: Text(tab['title'], style: textStyle),
+        icon: tab['icon'],
+        activeIcon: tab['icon_select'],
+      );
+    }).toList();
 
     return Scaffold(
-      body: _tabPages[_selectedIndex],
+      body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: getTabIcon(0), title: getTabTitle(0)),
-          BottomNavigationBarItem(icon: getTabIcon(1), title: getTabTitle(1)),
-          BottomNavigationBarItem(icon: getTabIcon(2), title: getTabTitle(2))
-        ],
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-      ),
+          items: items,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _selectedIndex,
+          onTap: (index) => setState(() => _selectedIndex = index)),
     );
   }
 }
