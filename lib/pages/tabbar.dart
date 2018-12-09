@@ -59,7 +59,6 @@ class _TabBarState extends State<TabBarPage> {
       controller: _pageController,
       itemCount: _pages.length,
       physics: NeverScrollableScrollPhysics(),
-      onPageChanged: (int index) => setState(() => _selectedIndex = index),
     );
 
     final btmNavBar = BottomNavigationBar(

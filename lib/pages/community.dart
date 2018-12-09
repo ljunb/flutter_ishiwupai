@@ -14,6 +14,8 @@ class _CommunityState extends State<Community>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Center(
       child: Text('逛吃'),
     );

@@ -14,6 +14,8 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Center(
       child: Text('食物百科'),
     );

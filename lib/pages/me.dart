@@ -13,6 +13,8 @@ class _MeState extends State<Me> with AutomaticKeepAliveClientMixin<Me> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Center(
       child: Text('我的'),
     );
