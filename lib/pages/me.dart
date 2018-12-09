@@ -7,7 +7,10 @@ class Me extends StatefulWidget {
   _MeState createState() => _MeState();
 }
 
-class _MeState extends State<Me> {
+class _MeState extends State<Me> with AutomaticKeepAliveClientMixin<Me> {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     return Center(

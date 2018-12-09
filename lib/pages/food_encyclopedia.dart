@@ -7,20 +7,15 @@ class FoodEncyclopedia extends StatefulWidget {
   _FoodEncyclopediaState createState() => _FoodEncyclopediaState();
 }
 
-class _FoodEncyclopediaState extends State<FoodEncyclopedia> {
-  int count = 0;
+class _FoodEncyclopediaState extends State<FoodEncyclopedia>
+    with AutomaticKeepAliveClientMixin<FoodEncyclopedia> {
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
-    final content = Center(
-      child: Container(
-        color: Colors.white,
-        child: Text('食物百科')
-      ),
-    );
-
-    return Scaffold(
-      body: content,
+    return Center(
+      child: Text('食物百科'),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'food_encyclopedia.dart';
 import 'community.dart';
 import 'me.dart';
+import '../widgets/tab_item.dart';
 
 class TabBarPage extends StatefulWidget {
   @override
@@ -9,7 +10,10 @@ class TabBarPage extends StatefulWidget {
 }
 
 class _TabBarState extends State<TabBarPage> {
+  PageController _pageController;
+  List<TabItem> _tabItems;
   int _selectedIndex = 0;
+
   final _pages = [FoodEncyclopedia(), Community(), Me()];
   final _tapOptions = [
     {
@@ -29,32 +33,48 @@ class _TabBarState extends State<TabBarPage> {
     }
   ];
 
-  static Image getIcon(path) =>
-      new Image.asset(path, width: 20.0, height: 20.0);
+  static Image getIcon(path) => Image.asset(path, width: 20.0, height: 20.0);
+
+  @override
+  void initState() {
+    super.initState();
+    setupTabItems();
+    _pageController = PageController(initialPage: _selectedIndex);
+  }
+
+  setupTabItems() {
+    _tabItems = _tapOptions
+        .map((tabItem) => TabItem(
+              title: tabItem['title'],
+              icon: tabItem['icon'],
+              activeIcon: tabItem['icon_select'],
+            ))
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final items = _tapOptions.map((var tab) {
-      final index =
-          _tapOptions.indexWhere((ele) => ele['title'] == tab['title']);
-      final textStyle = index == _selectedIndex
-          ? TextStyle(fontSize: 12, color: Colors.orange)
-          : TextStyle(fontSize: 12, color: Colors.grey);
+    final body = PageView.builder(
+      itemBuilder: (BuildContext context, int index) => _pages[index],
+      controller: _pageController,
+      itemCount: _pages.length,
+      physics: NeverScrollableScrollPhysics(),
+      onPageChanged: (int index) => setState(() => _selectedIndex = index),
+    );
 
-      return BottomNavigationBarItem(
-        title: Text(tab['title'], style: textStyle),
-        icon: tab['icon'],
-        activeIcon: tab['icon_select'],
-      );
-    }).toList();
+    final btmNavBar = BottomNavigationBar(
+        fixedColor: Colors.orange,
+        items: _tabItems.map((tab) => tab.item).toList(),
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
+        onTap: (index) => setState(() {
+          _selectedIndex = index;
+          _pageController.jumpToPage(index);
+        }));
 
     return Scaffold(
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-          items: items,
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _selectedIndex,
-          onTap: (index) => setState(() => _selectedIndex = index)),
+      body: body,
+      bottomNavigationBar: btmNavBar,
     );
   }
 }

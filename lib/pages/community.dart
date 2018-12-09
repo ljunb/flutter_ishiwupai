@@ -7,7 +7,11 @@ class Community extends StatefulWidget {
   _CommunityState createState() => _CommunityState();
 }
 
-class _CommunityState extends State<Community> {
+class _CommunityState extends State<Community>
+    with AutomaticKeepAliveClientMixin<Community> {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     return Center(
