@@ -44,6 +44,10 @@ flutter:
     - assets/ic_tab_my_select.png
     - assets/ic_tab_shop.png
     - assets/ic_tab_shop_select.png
+    - assets/img_home_bg.png
+    - assets/ic_head_logo.png
+    - assets/ic_home_search.png
+    - assets/ic_scan.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
