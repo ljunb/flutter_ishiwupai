@@ -32,8 +32,8 @@ class HomeSearchBarButton extends StatelessWidget {
     return GestureDetector(
         onTap: this.onPress,
         child: Container(
-            height: 44,
-            width: MediaQuery.of(context).size.width * 0.88,
+            height: 50,
+            width: MediaQuery.of(context).size.width - 16 * 2,
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(4.0))),
