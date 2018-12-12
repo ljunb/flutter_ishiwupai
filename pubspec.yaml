@@ -49,6 +49,9 @@ flutter:
     - assets/ic_head_logo.png
     - assets/ic_home_search.png
     - assets/ic_scan.png
+    - assets/ic_home_analyse.png
+    - assets/ic_search_compare.png
+    - assets/ic_scan_compare.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

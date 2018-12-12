@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../widgets/home_search_bar.dart';
-import '../widgets/home_food_section_view.dart';
+import '../widgets/home/home_search_bar.dart';
+import '../widgets/home/home_food_section_view.dart';
+import '../widgets/home/image_text_button.dart';
+
+enum FoodOptions { Analyse, Search, Scan }
 
 class FoodEncyclopedia extends StatefulWidget {
   static String tag = 'food_encyclopedia_page';
@@ -48,8 +51,56 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
     print('scan');
   }
 
+  _handleClickOptions(FoodOptions options) {
+    switch (options) {
+      case FoodOptions.Analyse:
+        break;
+      case FoodOptions.Search:
+        break;
+      case FoodOptions.Scan:
+        break;
+    }
+    print(options);
+  }
+
   _handleClickCategoryItem(var category) {
     print(category.toString());
+  }
+
+  _buildOptionSection() {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 10, 16, 0),
+      height: 60,
+      decoration: BoxDecoration(color: Colors.white, boxShadow: [
+        BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.3),
+            offset: Offset(1, -1),
+            blurRadius: 2)
+      ]),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          ImageTextButton(
+            title: '饮食分析',
+            icon: Image.asset('assets/ic_home_analyse.png',
+                width: 28, height: 28),
+            onPress: () => _handleClickOptions(FoodOptions.Analyse),
+          ),
+          ImageTextButton(
+            title: '搜索对比',
+            icon: Image.asset('assets/ic_search_compare.png',
+                width: 28, height: 28),
+            onPress: () => _handleClickOptions(FoodOptions.Search),
+          ),
+          ImageTextButton(
+            title: '扫码对比',
+            icon: Image.asset('assets/ic_scan_compare.png',
+                width: 28, height: 28),
+            onPress: () => _handleClickOptions(FoodOptions.Scan),
+          )
+        ],
+      ),
+    );
   }
 
   _buildFoodSection() {
@@ -103,9 +154,11 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
       ],
     );
 
+    final optionSection = _buildOptionSection();
+
     final foodSection = _buildFoodSection();
     final contentWrp = Container(
-      margin: const EdgeInsets.only(top: 30),
+      margin: const EdgeInsets.only(top: 25),
       child: Column(
         children: <Widget>[foodSection],
       ),
@@ -115,7 +168,7 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
       height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
         child: Column(
-          children: <Widget>[topImage, contentWrp],
+          children: <Widget>[topImage, optionSection, contentWrp],
         ),
       ),
     );
