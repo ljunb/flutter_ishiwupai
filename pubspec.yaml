@@ -52,6 +52,7 @@ flutter:
     - assets/ic_home_analyse.png
     - assets/ic_search_compare.png
     - assets/ic_scan_compare.png
+    - assets/img_home_list_bg.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

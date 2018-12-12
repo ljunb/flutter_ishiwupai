@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'food_encyclopedia.dart';
 import 'community.dart';
 import 'me.dart';
@@ -67,9 +68,14 @@ class _TabBarState extends State<TabBarPage> {
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: (index) => setState(() {
-          _selectedIndex = index;
-          _pageController.jumpToPage(index);
-        }));
+              _selectedIndex = index;
+              _pageController.jumpToPage(index);
+
+              final overlayStyle = index == 1
+                  ? SystemUiOverlayStyle.dark
+                  : SystemUiOverlayStyle.light;
+              SystemChrome.setSystemUIOverlayStyle(overlayStyle);
+            }));
 
     return Scaffold(
       body: body,

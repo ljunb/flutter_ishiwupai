@@ -4,8 +4,10 @@ import 'dart:convert';
 import '../widgets/home/home_search_bar.dart';
 import '../widgets/home/home_food_section_view.dart';
 import '../widgets/home/image_text_button.dart';
+import '../widgets/home/animated_navigation_bar.dart';
 
 enum FoodOptions { Analyse, Search, Scan }
+const animatedControlOffsetY = 100;
 
 class FoodEncyclopedia extends StatefulWidget {
   static String tag = 'food_encyclopedia_page';
@@ -20,11 +22,20 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
   bool get wantKeepAlive => true;
 
   var _foodGroup = [];
+  ScrollController _scrollController = ScrollController();
+  double opacity = 0;
 
   @override
   initState() {
     super.initState();
+    _addScrollListener();
     _fetchHomeData();
+  }
+  
+  _addScrollListener() {
+    _scrollController.addListener(() {
+      print(_scrollController.position.pixels);
+    });
   }
 
   _fetchHomeData() async {
@@ -164,13 +175,18 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
       ),
     );
 
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[topImage, optionSection, contentWrp],
+    return Stack(
+      children: <Widget>[
+        Container(
+          height: MediaQuery.of(context).size.height,
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[topImage, optionSection, contentWrp],
+            ),
+            controller: _scrollController,
+          ),
         ),
-      ),
+      ],
     );
   }
 }

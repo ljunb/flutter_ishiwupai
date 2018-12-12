@@ -15,6 +15,25 @@ class HomeFoodSectionView extends StatelessWidget {
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context).size;
 
+    final titleContent = Container(
+      height: 44,
+      child: Column(
+        children: <Widget>[
+          Container(
+            color: Colors.white,
+            width: screen.width - 16 * 2,
+            height: 30,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(top: 2),
+            child:
+                Text(titleMap[group['kind']], style: TextStyle(fontSize: 16)),
+          ),
+          Image.asset('assets/img_home_list_bg.png',
+              height: 14, width: screen.width - 16 * 2, fit: BoxFit.cover)
+        ],
+      ),
+    );
+
     List<Widget> categories = [];
     for (var category in group['categories']) {
       categories.add(GestureDetector(
@@ -29,19 +48,16 @@ class HomeFoodSectionView extends StatelessWidget {
                 Text(category['name'], style: TextStyle(fontSize: 12))
               ]))));
     }
-    return Container(
+    final categoryContent = Container(
       color: Colors.white,
+      child: Wrap(children: categories),
+    );
+
+    return Container(
       width: screen.width - 16 * 2,
       margin: const EdgeInsets.only(bottom: 25),
       child: Column(
-        children: <Widget>[
-          Container(
-              height: 40,
-              alignment: Alignment.center,
-              child: Text(titleMap[group['kind']],
-                  style: TextStyle(fontSize: 18))),
-          Wrap(children: categories)
-        ],
+        children: <Widget>[titleContent, categoryContent],
       ),
     );
   }
