@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../widgets/home/home_search_bar.dart';
@@ -8,7 +9,8 @@ import '../widgets/home/animated_navigation_bar.dart';
 
 enum FoodOptions { Analyse, Search, Scan }
 
-const animatedControlOffsetY = 100;
+const topImageHeight = 220;
+const animatedControlOffsetY = topImageHeight - 44;
 
 class FoodEncyclopedia extends StatefulWidget {
   static String tag = 'food_encyclopedia_page';
@@ -22,28 +24,25 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
   @override
   bool get wantKeepAlive => true;
 
-  var _foodGroup = [];
+  List<dynamic> _foodGroup = [];
   ScrollController _scrollController = ScrollController();
-  AnimatedNavigationBarController _animatedController =
-      AnimatedNavigationBarController();
-  GlobalKey<AnimatedNavigationBarState> _globalKey = GlobalKey();
+  double opacity = 0;
 
   @override
   initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+
     _addScrollListener();
     _fetchHomeData();
   }
 
   _addScrollListener() {
-    _animatedController.value.opacity = 0;
     _scrollController.addListener(() {
-      if (_scrollController.offset < 80) {
-        _animatedController.value.opacity = (_scrollController.offset / 80).toDouble();
-        _globalKey.currentState.setState((){});
-      } else {
-
-      }
+      var offset = _scrollController.offset / animatedControlOffsetY;
+      setState(() {
+        opacity = offset < 0 ? 0 : (offset > 1 ? 1 : offset);
+      });
     });
   }
 
@@ -140,7 +139,7 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
 
     final screen = MediaQuery.of(context).size;
     final iphoneXNavHeight = MediaQuery.of(context).padding.top;
-    final imgHeight = 220 + iphoneXNavHeight;
+    final imgHeight = topImageHeight + iphoneXNavHeight;
 
     final topImage = Stack(
       children: <Widget>[
@@ -196,8 +195,9 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
           ),
         ),
         AnimatedNavigationBar(
-          key: _globalKey,
-          controller: _animatedController,
+          opacity: opacity,
+          onPress: _handleClickSearchBar,
+          onScan: _handleClickScanBtn,
         )
       ],
     );

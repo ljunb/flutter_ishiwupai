@@ -1,59 +1,45 @@
 import 'package:flutter/material.dart';
 import './home_search_bar.dart';
 
-class AnimatedNavigationBar extends StatefulWidget {
-  AnimatedNavigationBar({Key key, this.opacity, this.controller})
-      : super(key: key);
+class AnimatedNavigationBar extends StatelessWidget {
+  AnimatedNavigationBar({Key key, this.opacity, this.onScan, this.onPress});
+  final double opacity;
+  final Function onPress;
+  final Function onScan;
 
-  final AnimatedNavigationBarController controller;
-  final Animation opacity;
-
-  @override
-  State<StatefulWidget> createState() {
-    return AnimatedNavigationBarState();
+  _handlePress() {
+    if (this.opacity <= 0.5) return;
+    this.onPress();
   }
-}
 
-class AnimatedNavigationBarState extends State<AnimatedNavigationBar> {
-  AnimatedNavigationBarController _controller;
+  _handleScan() {
+    if (this.opacity <= 0.5) return;
+    this.onScan();
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.controller == null) {
-      _controller = AnimatedNavigationBarController();
-      _controller.value.opacity = 0;
-    } else {
-      _controller = widget.controller;
-    }
-
     final navBarHeight = MediaQuery.of(context).padding.top + 44;
-
-    return Container(
-      color: Color.fromRGBO(231, 139, 86, widget.controller.value.opacity),
+    return AnimatedOpacity(
+      opacity: this.opacity,
+      duration: Duration(milliseconds: 100),
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: <Widget>[
           Container(
-            color: Color.fromRGBO(231, 139, 86, widget.controller.value.opacity),
+            color: Color.fromRGBO(231, 139, 86, 1),
             height: navBarHeight,
             width: MediaQuery.of(context).size.width,
           ),
           Container(
             padding: const EdgeInsets.only(bottom: 4),
-            child: HomeSearchBarButton(),
+            child: HomeSearchBarButton(
+              onPress: _handlePress,
+              onScan: _handleScan,
+            ),
           )
         ],
       ),
     );
   }
-}
-
-class AnimatedNavigationBarOpacityValue {
-  double opacity;
-}
-
-class AnimatedNavigationBarController
-    extends ValueNotifier<AnimatedNavigationBarOpacityValue> {
-  AnimatedNavigationBarController()
-      : super(AnimatedNavigationBarOpacityValue());
 }
