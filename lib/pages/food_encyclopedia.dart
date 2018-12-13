@@ -7,6 +7,7 @@ import '../widgets/home/image_text_button.dart';
 import '../widgets/home/animated_navigation_bar.dart';
 
 enum FoodOptions { Analyse, Search, Scan }
+
 const animatedControlOffsetY = 100;
 
 class FoodEncyclopedia extends StatefulWidget {
@@ -23,7 +24,9 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
 
   var _foodGroup = [];
   ScrollController _scrollController = ScrollController();
-  double opacity = 0;
+  AnimatedNavigationBarController _animatedController =
+      AnimatedNavigationBarController();
+  GlobalKey<AnimatedNavigationBarState> _globalKey = GlobalKey();
 
   @override
   initState() {
@@ -31,10 +34,16 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
     _addScrollListener();
     _fetchHomeData();
   }
-  
+
   _addScrollListener() {
+    _animatedController.value.opacity = 0;
     _scrollController.addListener(() {
-      print(_scrollController.position.pixels);
+      if (_scrollController.offset < 80) {
+        _animatedController.value.opacity = (_scrollController.offset / 80).toDouble();
+        _globalKey.currentState.setState((){});
+      } else {
+
+      }
     });
   }
 
@@ -186,6 +195,10 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
             controller: _scrollController,
           ),
         ),
+        AnimatedNavigationBar(
+          key: _globalKey,
+          controller: _animatedController,
+        )
       ],
     );
   }
