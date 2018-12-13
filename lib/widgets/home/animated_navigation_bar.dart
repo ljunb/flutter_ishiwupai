@@ -1,27 +1,45 @@
 import 'package:flutter/material.dart';
 import './home_search_bar.dart';
 
-class AnimatedNavigationBar extends StatelessWidget {
-  AnimatedNavigationBar({Key key, this.opacity, this.onScan, this.onPress});
-  final double opacity;
+class AnimatedNavigationBar extends StatefulWidget {
+  AnimatedNavigationBar(
+      {Key key, this.onScan, this.onPress, this.controller}): super(key: key);
+
   final Function onPress;
   final Function onScan;
+  final AnimatedNavigationBarController controller;
+
+  @override
+  State<StatefulWidget> createState() {
+    return AnimatedNavigationBarState();
+  }
+}
+
+class AnimatedNavigationBarState extends State<AnimatedNavigationBar> {
+  AnimatedNavigationBarController _controller;
 
   _handlePress() {
-    if (this.opacity <= 0.5) return;
-    this.onPress();
+    if (widget.controller.value.opacity <= 0.5) return;
+    widget.onPress();
   }
 
   _handleScan() {
-    if (this.opacity <= 0.5) return;
-    this.onScan();
+    if (widget.controller.value.opacity <= 0.5) return;
+    widget.onScan();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.controller == null) {
+      _controller = AnimatedNavigationBarController();
+      _controller.value.opacity = 0;
+    } else {
+      _controller = widget.controller;
+    }
+
     final navBarHeight = MediaQuery.of(context).padding.top + 44;
     return AnimatedOpacity(
-      opacity: this.opacity,
+      opacity: _controller.value.opacity,
       duration: Duration(milliseconds: 100),
       child: Stack(
         alignment: Alignment.bottomCenter,
@@ -42,4 +60,13 @@ class AnimatedNavigationBar extends StatelessWidget {
       ),
     );
   }
+}
+
+class AnimatedNavigationBarController
+    extends ValueNotifier<AnimatedNavigationBarStateValue> {
+  AnimatedNavigationBarController() : super(AnimatedNavigationBarStateValue());
+}
+
+class AnimatedNavigationBarStateValue {
+  double opacity;
 }

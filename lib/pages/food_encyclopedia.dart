@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:math';
 import '../widgets/home/home_search_bar.dart';
 import '../widgets/home/home_food_section_view.dart';
 import '../widgets/home/image_text_button.dart';
@@ -26,7 +27,8 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
 
   List<dynamic> _foodGroup = [];
   ScrollController _scrollController = ScrollController();
-  double opacity = 0;
+  AnimatedNavigationBarController _barController = AnimatedNavigationBarController();
+  GlobalKey<AnimatedNavigationBarState> _globalKey = GlobalKey();
 
   @override
   initState() {
@@ -38,11 +40,12 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
   }
 
   _addScrollListener() {
+    _barController.value.opacity = 0;
     _scrollController.addListener(() {
-      var offset = _scrollController.offset / animatedControlOffsetY;
-      setState(() {
-        opacity = offset < 0 ? 0 : (offset > 1 ? 1 : offset);
-      });
+      final double offset = _scrollController.offset / animatedControlOffsetY;
+      final double opacity = min(1.0, max(offset, 0.0));
+      _barController.value.opacity = opacity;
+      _globalKey.currentState.setState(() {});
     });
   }
 
@@ -195,7 +198,8 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
           ),
         ),
         AnimatedNavigationBar(
-          opacity: opacity,
+          key: _globalKey,
+          controller: _barController,
           onPress: _handleClickSearchBar,
           onScan: _handleClickScanBtn,
         )
