@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import './home_search_bar.dart';
 
 class AnimatedNavigationBar extends StatefulWidget {
-  AnimatedNavigationBar(
-      {Key key, this.onScan, this.onPress, this.controller}): super(key: key);
+  AnimatedNavigationBar({Key key, this.onScan, this.onPress, this.controller})
+      : super(key: key);
 
   final Function onPress;
   final Function onScan;
@@ -41,22 +41,15 @@ class AnimatedNavigationBarState extends State<AnimatedNavigationBar> {
     return AnimatedOpacity(
       opacity: _controller.value.opacity,
       duration: Duration(milliseconds: 100),
-      child: Stack(
+      child: Container(
+        color: Color.fromRGBO(231, 139, 86, 1),
+        height: navBarHeight,
         alignment: Alignment.bottomCenter,
-        children: <Widget>[
-          Container(
-            color: Color.fromRGBO(231, 139, 86, 1),
-            height: navBarHeight,
-            width: MediaQuery.of(context).size.width,
-          ),
-          Container(
-            padding: const EdgeInsets.only(bottom: 4),
-            child: HomeSearchBarButton(
-              onPress: _handlePress,
-              onScan: _handleScan,
-            ),
-          )
-        ],
+        padding: EdgeInsets.only(bottom: 4),
+        child: HomeSearchBarButton(
+          onPress: _handlePress,
+          onScan: _handleScan,
+        ),
       ),
     );
   }
