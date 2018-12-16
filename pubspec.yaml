@@ -58,6 +58,8 @@ flutter:
     - assets/ic_my_photos.png
     - assets/ic_my_collect.png
     - assets/ic_my_upload.png
+    - assets/ic_my_setting.png
+    - assets/img_default_avatar.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
