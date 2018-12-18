@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'food_encyclopedia.dart';
-import 'community.dart';
+import 'feed.dart';
 import 'me.dart';
 import '../widgets/tab_item.dart';
 
@@ -15,7 +15,7 @@ class _TabBarState extends State<TabBarPage> {
   List<TabItem> _tabItems;
   int _selectedIndex = 0;
 
-  final _pages = [FoodEncyclopedia(), Community(), Me()];
+  final _pages = [FoodEncyclopedia(), Feed(), Me()];
   final _tapOptions = [
     {
       'title': '食物百科',

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/food_encyclopedia.dart';
-import 'pages/community.dart';
+import 'pages/feed.dart';
 import 'pages/me.dart';
 import 'pages/tabbar.dart';
 
@@ -9,7 +9,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder> {
     FoodEncyclopedia.tag: (context) => FoodEncyclopedia(),
-    Community.tag: (context) => Community(),
+    Feed.tag: (context) => Feed(),
     Me.tag: (context) => Me()
   };
 

@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class LargeListView extends StatefulWidget {
-  LargeListView(
-      {Key key,
-      @required this.itemCount,
-      @required this.itemBuilder,
-      @required this.onLoadMore,
-      this.onRefresh,
-      this.onRetry,
-      this.footerWidget,
-      this.isLoadAll})
+  LargeListView({Key key,
+    @required this.itemCount,
+    @required this.itemBuilder,
+    @required this.onFetch,
+    this.onRetry,
+    this.footerWidget,
+    this.isLoadAll})
       : super(key: key);
 
   final int itemCount;
   final Function itemBuilder;
-  final Function onRefresh;
-  final Function onLoadMore;
+  final Function onFetch;
   final Function onRetry;
   final Widget footerWidget;
   final bool isLoadAll;
@@ -49,18 +47,18 @@ class LargeListViewState extends State<LargeListView> {
         setState(() {
           _isLoadError = false;
         });
-        widget.onLoadMore(_pageIndex);
+        widget.onFetch(_pageIndex);
       } else {
         _pageIndex++;
-        widget.onLoadMore(_pageIndex);
+        widget.onFetch(_pageIndex);
       }
     });
   }
 
   Future _handleRefresh() async {
-    if (widget.onRefresh != null) {
+    if (widget.onFetch != null) {
       _pageIndex = 1;
-      await widget.onRefresh(_pageIndex);
+      await widget.onFetch(_pageIndex);
     }
   }
 
@@ -81,10 +79,23 @@ class LargeListViewState extends State<LargeListView> {
       return Container(alignment: Alignment.center, child: Text('加载中……'));
     }
 
-    var content = widget.isLoadAll ? '已加载完所有数据' : '正在加载跟多数据……';
-    if (_isLoadError) {
-      content = '网络出错';
+    final isLoading = !widget.isLoadAll && !_isLoadError;
+    if (isLoading) {
+      return Container(
+        height: 40,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CupertinoActivityIndicator(radius: 8),
+            SizedBox(width: 5),
+            Text('正在加载更多数据……',
+                style: TextStyle(color: Colors.grey, fontSize: 14))
+          ],
+        ),
+      );
     }
+
+    final content = widget.isLoadAll ? '已加载完所有数据' : '网络出错';
     return Container(
       height: 44,
       child: Text(content),

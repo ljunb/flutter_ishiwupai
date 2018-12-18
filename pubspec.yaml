@@ -61,6 +61,8 @@ flutter:
     - assets/ic_my_setting.png
     - assets/img_default_avatar.png
     - assets/ic_feed_camera.png
+    - assets/ic_feed_read.png
+    - assets/ic_feed_watch.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
