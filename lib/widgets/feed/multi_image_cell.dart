@@ -11,11 +11,15 @@ class MultiImageCell extends StatelessWidget {
     final screen = MediaQuery.of(context).size;
     List<Widget> imageList = [];
     for (String img in item['images']) {
-      imageList.add(Image.network(
-        img,
-        height: 80,
-        width: (screen.width - 15 * 2 - 10 * 2) / 3,
-      ));
+      imageList.add(
+        FadeInImage.assetNetwork(
+          placeholder: 'assets/img_news_default.png',
+          image: img,
+          height: 80,
+          width: (screen.width - 15 * 2 - 10 * 2) / 3,
+          fit: BoxFit.cover,
+        )
+      );
     }
 
     return GestureDetector(

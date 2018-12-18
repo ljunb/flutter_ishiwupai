@@ -72,11 +72,14 @@ class _FeedState extends State<Feed>
                   fontWeight: FontWeight.w300),
             ),
             backgroundColor: Colors.white,
+            brightness: Brightness.light,
             bottom: TabBar(
               tabs: myTabs,
               labelColor: Colors.red,
               indicatorColor: Colors.red,
+              labelStyle: TextStyle(fontSize: 15),
               unselectedLabelColor: const Color(0xFF666666),
+              unselectedLabelStyle: TextStyle(fontSize: 14),
               indicatorSize: TabBarIndicatorSize.label,
             ),
             actions: <Widget>[
@@ -89,7 +92,7 @@ class _FeedState extends State<Feed>
                 onPressed: () => print('camera'),
               )
             ],
-            elevation: 0,
+            elevation: 0.5,
           ),
           body: TabBarView(
             children: <Widget>[

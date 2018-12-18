@@ -117,6 +117,7 @@ class LargeListViewState extends State<LargeListView> {
     if (_isLoadError && widget.itemCount == 0) return _buildErrorView();
 
     return RefreshIndicator(
+      color: Colors.red,
       onRefresh: _handleRefresh,
       child: ListView.builder(
         itemBuilder: _itemBuilder,

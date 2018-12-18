@@ -53,8 +53,9 @@ class SingleImageCell extends StatelessWidget {
                   ],
                 ),
               ),
-              Image.network(
-                item['images'][0],
+              FadeInImage.assetNetwork(
+                placeholder: 'assets/img_news_default.png',
+                image: item['images'][0],
                 height: 80,
                 width: (screen.width - 15 * 2 - 10 * 2) / 3,
                 fit: BoxFit.cover,

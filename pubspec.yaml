@@ -63,6 +63,7 @@ flutter:
     - assets/ic_feed_camera.png
     - assets/ic_feed_read.png
     - assets/ic_feed_watch.png
+    - assets/img_news_default.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -27,7 +27,6 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
 
   List<dynamic> _foodGroup = [];
   ScrollController _scrollController = ScrollController();
-  AnimatedNavigationBarController _barController = AnimatedNavigationBarController();
   GlobalKey<AnimatedNavigationBarState> _globalKey = GlobalKey();
 
   @override
@@ -46,12 +45,10 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
   }
 
   _addScrollListener() {
-    _barController.value.opacity = 0;
     _scrollController.addListener(() {
       final double offset = _scrollController.offset / animatedControlOffsetY;
       final double opacity = min(1.0, max(offset, 0.0));
-      _barController.value.opacity = opacity;
-      _globalKey.currentState.setState(() {});
+      _globalKey.currentState.updateOpacity(opacity);
     });
   }
 
@@ -205,7 +202,6 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
         ),
         AnimatedNavigationBar(
           key: _globalKey,
-          controller: _barController,
           onPress: _handleClickSearchBar,
           onScan: _handleClickScanBtn,
         )

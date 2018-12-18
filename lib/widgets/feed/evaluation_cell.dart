@@ -17,12 +17,13 @@ class EvaluationCell extends StatelessWidget {
         children: <Widget>[
           Container(
             margin: const EdgeInsets.only(top: 15),
-            child: Image.network(
-              item['background'],
+            child: FadeInImage.assetNetwork(
+              placeholder: 'assets/img_news_default.png',
+              image: item['background'],
               height: screen.height * 0.3,
               width: screen.width - 16 * 2,
               fit: BoxFit.cover,
-            ),
+            )
           ),
           Container(
             height: screen.height * 0.3,
