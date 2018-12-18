@@ -31,6 +31,12 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
   GlobalKey<AnimatedNavigationBarState> _globalKey = GlobalKey();
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   initState() {
     super.initState();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);

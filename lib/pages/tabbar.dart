@@ -37,6 +37,12 @@ class _TabBarState extends State<TabBarPage> {
   static Image getIcon(path) => Image.asset(path, width: 20.0, height: 20.0);
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     setupTabItems();
