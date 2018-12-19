@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_ishiwupai/widgets/common/placeholder_cell.dart';
 
 class LargeListView extends StatefulWidget {
-  LargeListView({Key key,
-    @required this.itemCount,
-    @required this.itemBuilder,
-    @required this.onFetch,
-    this.onRetry,
-    this.footerWidget,
-    this.isLoadAll})
+  LargeListView(
+      {Key key,
+      @required this.itemCount,
+      @required this.itemBuilder,
+      @required this.onFetch,
+      this.onRetry,
+      this.isLoadAll,
+      this.placeholderBuilder})
       : super(key: key);
 
   final int itemCount;
   final Function itemBuilder;
   final Function onFetch;
   final Function onRetry;
-  final Widget footerWidget;
   final bool isLoadAll;
+  final Function placeholderBuilder;
 
   @override
   LargeListViewState createState() => LargeListViewState();
@@ -40,7 +42,8 @@ class LargeListViewState extends State<LargeListView> {
     super.initState();
     _scrollController.addListener(() {
       final canLoadMore = _scrollController.offset ==
-          _scrollController.position.maxScrollExtent && !widget.isLoadAll;
+              _scrollController.position.maxScrollExtent &&
+          !widget.isLoadAll;
       if (!canLoadMore) return;
 
       if (_isLoadError) {
@@ -70,13 +73,25 @@ class LargeListViewState extends State<LargeListView> {
     widget.onRetry();
   }
 
+  Widget _placeholderBuilder() {
+    List<Widget> placeholderList = [];
+    for (int i = 0; i < 10; i++) {
+      var placeholder = PlaceholderCell();
+      if (widget.placeholderBuilder != null) {
+        placeholder = widget.placeholderBuilder();
+      }
+      placeholderList.add(placeholder);
+    }
+    return Column(children: placeholderList);
+  }
+
   Widget _itemBuilder(BuildContext context, int index) {
     if (index < widget.itemCount) {
       return widget.itemBuilder(context, index);
     }
     // 首屏渲染
     if (widget.itemCount == 0) {
-      return Container(alignment: Alignment.center, child: Text('加载中……'));
+      return _placeholderBuilder();
     }
 
     final isLoading = !widget.isLoadAll && !_isLoadError;

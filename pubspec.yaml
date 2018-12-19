@@ -37,33 +37,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/ic_tab_homepage.png
-    - assets/ic_tab_homepage_select.png
-    - assets/ic_tab_search.png
-    - assets/ic_tab_search_select.png
-    - assets/ic_tab_my.png
-    - assets/ic_tab_my_select.png
-    - assets/ic_tab_shop.png
-    - assets/ic_tab_shop_select.png
-    - assets/img_home_bg.png
-    - assets/ic_head_logo.png
-    - assets/ic_home_search.png
-    - assets/ic_scan.png
-    - assets/ic_home_analyse.png
-    - assets/ic_search_compare.png
-    - assets/ic_scan_compare.png
-    - assets/img_home_list_bg.png
-    - assets/img_my_head.png
-    - assets/img_my_navbar.png
-    - assets/ic_my_photos.png
-    - assets/ic_my_collect.png
-    - assets/ic_my_upload.png
-    - assets/ic_my_setting.png
-    - assets/img_default_avatar.png
-    - assets/ic_feed_camera.png
-    - assets/ic_feed_read.png
-    - assets/ic_feed_watch.png
-    - assets/img_news_default.png
+    - assets/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
