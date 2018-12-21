@@ -3,6 +3,7 @@ import '../widgets/feed/feed_list.dart';
 import '../widgets/feed/evaluation_cell.dart';
 import '../widgets/feed/single_image_cell.dart';
 import '../widgets/feed/multi_image_cell.dart';
+import '../widgets/feed/feed_waterfall_list.dart';
 
 class Feed extends StatefulWidget {
   static String tag = 'feed_page';
@@ -96,10 +97,7 @@ class _FeedState extends State<Feed>
           ),
           body: TabBarView(
             children: <Widget>[
-              FeedList(
-                categoryId: 2,
-                itemBuilder: _buildEvaluationItem,
-              ),
+              FeedWaterfallList(),
               FeedList(
                 categoryId: 2,
                 itemBuilder: _buildEvaluationItem,

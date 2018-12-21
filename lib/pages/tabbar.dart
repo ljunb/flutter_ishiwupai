@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'food_encyclopedia.dart';
 import 'feed.dart';
 import 'me.dart';
-import '../widgets/tab_item.dart';
+import '../widgets/common/tab_item.dart';
 
 class TabBarPage extends StatefulWidget {
   @override

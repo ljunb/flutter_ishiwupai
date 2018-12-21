@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../large_list_view.dart';
+import '../common/large_list_view.dart';
 
 class FeedList extends StatefulWidget {
   FeedList({Key key, @required this.categoryId, @required this.itemBuilder})
