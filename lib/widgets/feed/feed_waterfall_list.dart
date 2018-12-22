@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -46,8 +47,13 @@ class _FeedWaterfallListState extends State<FeedWaterfallList>
   }
 
   Widget _itemBuilder(BuildContext context, int index) {
+    final screen = MediaQuery.of(context).size;
+    final itemWidth = (screen.width - 15 * 3) / 2;
     final item = _list[index];
-    String imageStr = item['card_image'];
+    final String imageStr = item['card_image'];
+    final String title = item['title'];
+    final String description = item['description'];
+    final int likeCount = item['like_ct'];
 
     if (item['content_type'] == 6) {
       return GestureDetector(
@@ -60,6 +66,30 @@ class _FeedWaterfallListState extends State<FeedWaterfallList>
       );
     }
 
+    List<Widget> profiles = [];
+    if (title.trim().length > 0) {
+      profiles.add(
+        Text(
+          title.trim(),
+          maxLines: 1,
+          softWrap: true,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.left,
+          style: TextStyle(fontSize: 14),
+        ),
+      );
+    }
+
+    if (description.trim().length > 0) {
+      profiles.add(Text(
+        description.trim(),
+        maxLines: 2,
+        softWrap: true,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(fontSize: 13, color: Colors.grey),
+      ));
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -70,42 +100,56 @@ class _FeedWaterfallListState extends State<FeedWaterfallList>
           fit: BoxFit.cover,
         ),
         Container(
-          alignment: Alignment.centerLeft,
           color: Colors.white,
           width: (MediaQuery.of(context).size.width - 15 * 3) / 2,
           padding: const EdgeInsets.all(4),
           child: Column(
-            children: <Widget>[
-              Text(
-                item['title'],
-                maxLines: 1,
-                textAlign: TextAlign.left,
-              ),
-              Text(
-                item['description'],
-                maxLines: 2,
-                style: TextStyle(fontSize: 13, color: Colors.grey),
-              )
-            ],
-          ),
+              crossAxisAlignment: CrossAxisAlignment.start, children: profiles),
         ),
-        Divider(color: Color(0xFFE4E4E4)),
-        Row(
-          children: <Widget>[
-            Row(
+        Divider(
+          color: Color(0xFFE4E4E4),
+          height: 0,
+        ),
+        Container(
+            color: Colors.white,
+            padding: const EdgeInsets.all(4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(15))
-                  ),
-                  child: Image.network(item['publisher_avatar'], width: 30, height: 30,),
+                Row(
+                  children: <Widget>[
+                    ClipOval(
+                      child: FadeInImage.assetNetwork(
+                        placeholder: 'assets/img_default_avatar.png',
+                        image: item['publisher_avatar'],
+                        width: 24,
+                        height: 24,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Container(
+                      width: itemWidth * 0.4,
+                      child: Text(item['publisher'],
+                          maxLines: 1,
+                          softWrap: true,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 11, color: Colors.grey)),
+                    )
+                  ],
                 ),
-                SizedBox(width: 8),
-                Text(item['publisher'])
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset('assets/ic_feed_like.png',
+                        width: 12, height: 12),
+                    SizedBox(width: 2),
+                    Text(likeCount.toString(),
+                        style: TextStyle(fontSize: 11, color: Colors.grey))
+                  ],
+                )
               ],
-            )
-          ],
-        )
+            ))
       ],
     );
   }
@@ -125,7 +169,7 @@ class _FeedWaterfallListState extends State<FeedWaterfallList>
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: _fetchList,
-      child: _buildListContent(),
+      child: _buildListContent()
     );
   }
 }

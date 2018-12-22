@@ -4,12 +4,17 @@ import 'dart:convert';
 import '../common/large_list_view.dart';
 
 class FeedList extends StatefulWidget {
-  FeedList({Key key, @required this.categoryId, @required this.itemBuilder})
+  FeedList(
+      {Key key,
+      @required this.categoryId,
+      @required this.itemBuilder,
+      this.placeholderBuilder})
       : assert(categoryId != 0),
         assert(itemBuilder != null);
 
   final int categoryId;
   final Widget Function(List list, int index) itemBuilder;
+  final Function placeholderBuilder;
 
   @override
   _FeedListState createState() => _FeedListState();
@@ -70,6 +75,7 @@ class _FeedListState extends State<FeedList>
       isLoadAll: _isLoadAll,
       itemCount: _list.length,
       itemBuilder: _itemBuilder,
+      placeholderBuilder: widget.placeholderBuilder,
       onFetch: _fetchList,
       onRetry: _handleRetry,
     );

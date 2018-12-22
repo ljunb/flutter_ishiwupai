@@ -44,6 +44,48 @@ class _FeedState extends State<Feed>
     );
   }
 
+  Widget _buildEvaluationItemPlaceholder(BuildContext context) {
+    final screen = MediaQuery.of(context).size;
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 15, 16, 0),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            color: const Color(0xFFCCCCCC),
+            height: screen.height * 0.3,
+            width: screen.width - 16 * 2,
+          ),
+          Container(
+            height: screen.height * 0.3,
+            width: screen.width - 16 * 2,
+            padding: const EdgeInsets.only(top: 20, bottom: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  color: Colors.white54,
+                  height: 15,
+                  width: 100,
+                ),
+                Container(
+                  color: Colors.white54,
+                  height: 20,
+                  width: screen.width * 0.5,
+                ),
+                Container(
+                  color: Colors.white54,
+                  height: 15,
+                  width: 100,
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   Widget _buildFeedItem(List list, int index) {
     List images = list[index]['images'];
     if (images.length == 1) {
@@ -101,6 +143,7 @@ class _FeedState extends State<Feed>
               FeedList(
                 categoryId: 2,
                 itemBuilder: _buildEvaluationItem,
+                placeholderBuilder: _buildEvaluationItemPlaceholder,
               ),
               FeedList(
                 categoryId: 3,

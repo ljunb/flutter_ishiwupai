@@ -18,7 +18,7 @@ class LargeListView extends StatefulWidget {
   final Function onFetch;
   final Function onRetry;
   final bool isLoadAll;
-  final Function placeholderBuilder;
+  final Widget Function(BuildContext context) placeholderBuilder;
 
   @override
   LargeListViewState createState() => LargeListViewState();
@@ -73,13 +73,12 @@ class LargeListViewState extends State<LargeListView> {
     widget.onRetry();
   }
 
-  Widget _placeholderBuilder() {
+  Widget _placeholderBuilder(BuildContext context) {
     List<Widget> placeholderList = [];
     for (int i = 0; i < 10; i++) {
-      var placeholder = PlaceholderCell();
-      if (widget.placeholderBuilder != null) {
-        placeholder = widget.placeholderBuilder();
-      }
+      Widget placeholder = widget.placeholderBuilder == null
+          ? PlaceholderCell()
+          : widget.placeholderBuilder(context);
       placeholderList.add(placeholder);
     }
     return Column(children: placeholderList);
@@ -91,7 +90,7 @@ class LargeListViewState extends State<LargeListView> {
     }
     // 首屏渲染
     if (widget.itemCount == 0) {
-      return _placeholderBuilder();
+      return _placeholderBuilder(context);
     }
 
     final isLoading = !widget.isLoadAll && !_isLoadError;
