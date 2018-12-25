@@ -19,7 +19,7 @@ class HomeSearchBarButton extends StatelessWidget {
     final scanBtn = GestureDetector(
       child: Image.asset('assets/ic_scan.png',
           height: 34, width: 34, color: Colors.black),
-      onTap: this.onScan,
+      onTap: () => this.onScan(context),
     );
 
     final content = Padding(
@@ -30,7 +30,7 @@ class HomeSearchBarButton extends StatelessWidget {
         ));
 
     return GestureDetector(
-        onTap: this.onPress,
+        onTap: () => this.onPress(context),
         child: Container(
             height: 40,
             width: MediaQuery.of(context).size.width - 16 * 2,

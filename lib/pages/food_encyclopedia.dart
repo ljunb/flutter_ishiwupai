@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:math';
+import '../pages/search.dart';
 import '../widgets/home/home_search_bar.dart';
 import '../widgets/home/home_food_section_view.dart';
 import '../widgets/home/image_text_button.dart';
@@ -68,8 +69,8 @@ class _FoodEncyclopediaState extends State<FoodEncyclopedia>
     }
   }
 
-  _handleClickSearchBar() {
-    print('handle');
+  _handleClickSearchBar(BuildContext context) {
+    Navigator.of(context).pushNamed(Search.tag);
   }
 
   _handleClickScanBtn() {
